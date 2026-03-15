@@ -10,40 +10,39 @@ Built with Python and FastAPI, the project features a sleek web interface that a
 
 Follow these steps to run the application on your local machine.
 
-## 1.prerequisites
+### 1.prerequisites
 * Python 3.8+ installed.
 * An active ElevenLabs API Key.
 
-## 2. Setup Virtual Environment
+
+### 2. Environment Setup
 Open your terminal and create a virtual environment in your project directory:
 ```bash
 python -m venv venv
 
-## Activate the virtual environment:
+# Activate the virtual environment:
 
 Windows: .\venv\Scripts\activate
 
 Mac/Linux: source venv/bin/activate
 
-## 3. Install Dependencies
+# Install Dependencies
 using: pip install -r requirements.txt
 
-## 4. Configure API key:
+# Configure API key:
 In main.py find API key variable at top:
 ELEVENLABS_API_KEY = "your_api_key_here"
 
 
-## 5. Run the Application:
+#Run the Application:
 python main.py
 
 
-
-
-###  Design Choices & Logic Mapping
+## Design Choices and Logical Mapping
 To satisfy the core requirement of mapping emotions to voice parameters, I implemented a multi-layered architectural approach focusing on granular emotion detection, dynamic API modulation, and text pre-processing.
 
 
-## 1. Granular Emotion Detection (Top-K Sensitivity)
+# Granular Emotion Detection (Top-K Sensitivity)
 Instead of basic positive/negative sentiment analysis, I integrated the SamLowe/roberta-base-go_emotions model via Hugging Face. This model detects 28 highly specific emotional states. To prevent the model from defaulting to "neutral" too easily, I implemented a Top-K (K=5) search heuristic. The system scans the top 5 predicted labels to find any match within our predefined emotional categories before falling back to neutral.
 
 These 28 states are mapped into 5 broad vocal categories:
@@ -60,7 +59,7 @@ Surprise: (surprise, realization, confusion, curiosity)
 
 
 
-## 2. Vocal Parameter Modulation Logic (ElevenLabs API)
+# Vocal Parameter Modulation Logic (ElevenLabs API)
 To fulfill the requirement of altering at least two distinct vocal parameters, I utilized the ElevenLabs VoiceSettings object to dynamically modulate Stability (emotional variance) and Style (emotional exaggeration).
 
 Joy/Surprise: Moderate Stability (0.40 - 0.45) and High Style (0.75 - 0.85) to create a bright, expressive, and highly animated delivery.
@@ -73,7 +72,7 @@ Neutral: High Stability (0.75) and Zero Style (0.0) for standard, informational 
 
 
 
-## 3. Emotional Text Pre-Processing
+# Emotional Text Pre-Processing
 Because advanced LLM-based TTS engines react strongly to punctuation and capitalization, I implemented a text pre-processor that acts as a "director" for the AI. Before sending the string to ElevenLabs, the engine injects contextual prosody cues:
 
 Anger: Applies .upper() and !!! to forcefully trigger the model's high-energy shouting parameters.
