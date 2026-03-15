@@ -15,7 +15,7 @@ Follow these steps to run the application on your local machine.
 * An active ElevenLabs API Key.
 
 
-### 2. Environment Setup
+### 2. Environment Setup and Design Logic
 Open your terminal and create a virtual environment in your project directory:
 ```bash
 python -m venv venv
